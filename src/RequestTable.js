@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './RequestTable.css';
+import './RequestTable.css'; // Import the updated CSS file
 
 const RequestTable = () => {
     const [requests, setRequests] = useState([]);
+    const [isAutoApproved, setIsAutoApproved] = useState(false);
+    const [isRejectedAll, setIsRejectedAll] = useState(false);
 
     useEffect(() => {
         const fetchRequests = async () => {
@@ -27,7 +29,7 @@ const RequestTable = () => {
 
     const approveRequest = async (id) => {
         try {
-            await axios.post(`https://localhost:7082/api/Request/approve/${id}`);
+            await axios.post('https://localhost:7082/api/Request/auto-approve-all');
             setRequests(prevRequests =>
                 prevRequests.map((request) =>
                     request.id === id ? { ...request, status: 'Approved', isChecked: true } : request
@@ -40,7 +42,7 @@ const RequestTable = () => {
 
     const rejectRequest = async (id) => {
         try {
-            await axios.post(`https://localhost:7082/api/Request/reject/${id}`);
+            await axios.post('https://localhost:7082/api/Request/auto-reject-all');
             setRequests(prevRequests =>
                 prevRequests.map((request) =>
                     request.id === id ? { ...request, status: 'Rejected', isChecked: false } : request
@@ -52,12 +54,16 @@ const RequestTable = () => {
     };
 
     const autoApproveAll = () => {
+        setIsAutoApproved(true);
+        setIsRejectedAll(false);
         setRequests(prevRequests =>
             prevRequests.map((request) => ({ ...request, status: 'Approved', isChecked: true }))
         );
     };
 
     const rejectAll = () => {
+        setIsAutoApproved(false);
+        setIsRejectedAll(true);
         setRequests(prevRequests =>
             prevRequests.map((request) => ({ ...request, status: 'Rejected', isChecked: false }))
         );
@@ -65,9 +71,9 @@ const RequestTable = () => {
 
     const getButtonClass = (status, action) => {
         if (action === 'approve') {
-            return status === 'Approved' ? 'approve-btn green' : 'approve-btn';
+            return status === 'Approved' || isAutoApproved ? 'approve-btn green' : 'approve-btn blue';
         } else if (action === 'reject') {
-            return status === 'Rejected' ? 'reject-btn red' : 'reject-btn';
+            return status === 'Rejected' || isRejectedAll ? 'reject-btn red' : 'reject-btn blue';
         }
         return '';
     };
@@ -77,17 +83,23 @@ const RequestTable = () => {
             return 'approved-checkbox';
         } else if (status === 'Rejected') {
             return 'rejected-checkbox';
+        } else if (status === 'Pending') {
+            return 'pending-checkbox';
         }
         return '';
     };
 
     return (
         <div className="table-container">
-            <h2>Welcome to Auto Approver</h2>
+            <h2>welcome to Auto Approver</h2>
 
-            <button onClick={autoApproveAll} className="auto-approve-btn">Auto Approve All</button>
-            <button onClick={rejectAll} className="reject-all-btn">Reject All</button>
+            {/* Button Group for Auto Approve and Reject All */}
+            <div className="button-group">
+                <button onClick={autoApproveAll} className="auto-approve-btn">Auto Approve All</button>
+                <button onClick={rejectAll} className="reject-all-btn">Reject All</button>
+            </div>
 
+            {/* Table for displaying requests */}
             <table>
                 <thead>
                     <tr>
@@ -96,7 +108,7 @@ const RequestTable = () => {
                         <th>Status</th>
                         <th>Timestamp</th>
                         <th>Actions</th>
-                        <th>Status</th>
+                        <th>Status Checkbox</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -115,12 +127,11 @@ const RequestTable = () => {
                                 </button>
                             </td>
                             <td>
-                                <input 
-                                    type="checkbox" 
-                                    className={getCheckboxClass(request.status)} 
-                                    disabled 
-                                    checked={request.isChecked} 
-                                />
+                                <span className={getCheckboxClass(request.status)}>
+                                    {request.status === 'Approved' && '✔'}
+                                    {request.status === 'Rejected' && '❌'}
+                                    {request.status === 'Pending' && '⭕'}
+                                </span>
                             </td>
                         </tr>
                     ))}

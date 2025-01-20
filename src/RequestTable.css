@@ -1,67 +1,169 @@
 /* RequestTable.css */
 
-/* Default button styles */
-.approve-btn, .reject-btn {
-    padding: 10px;
+/* Global Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Container for the table and buttons */
+.table-container {
+    width: 80%;
+    margin: 40px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Title Styling */
+h2 {
+    text-align: center;
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Button Group for Auto Approve and Reject All */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+/* Buttons for Auto Approve All and Reject All */
+button {
+    padding: 12px 20px;
+    font-size: 16px;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.approve-btn.green {
-    background-color: green;
+/* Hover Effects for Buttons */
+button:hover {
+    transform: scale(1.05);
+}
+
+/* Auto Approve and Reject All buttons */
+.auto-approve-btn,
+.reject-all-btn {
+    background-color: #4c8c0b;
     color: white;
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.reject-btn.red {
-    background-color: rgb(222, 92, 92);
+/* Button Colors on Hover */
+.auto-approve-btn:hover,
+.reject-all-btn:hover {
+    background-color: #1cdd43;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Table Header Styling */
+th {
+    background-color: #40a6f9;
     color: white;
+    padding: 12px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
 }
 
-/* Checkbox styles */
+/* Table Row Styling */
+td {
+    padding: 12px;
+    text-align: left;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Alternate Row Background Color for Better Readability */
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Button Styling inside the Table */
+button.approve-btn {
+    background-color: #4aa4ed;
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Green Approve button */
+button.approve-btn.green {
+    background-color: #4CAF50;
+}
+
+/* Red Reject button */
+button.reject-btn.red {
+    background-color: #e4594f;
+}
+
+/* Hover Effects for Table Buttons */
+button.approve-btn:hover,
+button.reject-btn:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* Checkbox Indicators Styling */
+td span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+/* Approved Checkbox (Green) */
 .approved-checkbox {
-    background-color: green;
-    border: 2px solid green;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    position: relative;
+    color: #4CAF50;
 }
 
-.approved-checkbox:checked::after {
-    content: '✔';
-    position: absolute;
-    top: 0;
-    left: 4px;
-    color: white;
-    font-size: 14px;
-}
-
+/* Rejected Checkbox (Red) */
 .rejected-checkbox {
-    background-color: rgb(219, 81, 81);
-    border: 2px solid rgb(201, 64, 64);
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    position: relative;
+    color: #F44336;
 }
 
-.rejected-checkbox:checked::after {
-    content: '❌';
-    position: absolute;
-    top: 0;
-    left: 4px;
-    color: white;
-    font-size: 14px;
+/* Pending Checkbox (Yellow) */
+.pending-checkbox {
+    color: #FFEB3B;
 }
 
-/* Additional button styles (optional) */
-.auto-approve-btn, .reject-all-btn {
-    margin-top: 10px;
-    padding: 10px 20px;
-    cursor: pointer;
-    background-color: #4b92de;
-    color: white;
-    border: none;
+/* Responsiveness */
+@media (max-width: 768px) {
+    .table-container {
+        width: 90%;
+    }
+
+    .button-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    button {
+        width: 100%;
+    }
 }
