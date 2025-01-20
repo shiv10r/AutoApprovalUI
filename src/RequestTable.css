@@ -1,0 +1,67 @@
+/* RequestTable.css */
+
+/* Default button styles */
+.approve-btn, .reject-btn {
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.approve-btn.green {
+    background-color: green;
+    color: white;
+}
+
+.reject-btn.red {
+    background-color: rgb(222, 92, 92);
+    color: white;
+}
+
+/* Checkbox styles */
+.approved-checkbox {
+    background-color: green;
+    border: 2px solid green;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.approved-checkbox:checked::after {
+    content: '✔';
+    position: absolute;
+    top: 0;
+    left: 4px;
+    color: white;
+    font-size: 14px;
+}
+
+.rejected-checkbox {
+    background-color: rgb(219, 81, 81);
+    border: 2px solid rgb(201, 64, 64);
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.rejected-checkbox:checked::after {
+    content: '❌';
+    position: absolute;
+    top: 0;
+    left: 4px;
+    color: white;
+    font-size: 14px;
+}
+
+/* Additional button styles (optional) */
+.auto-approve-btn, .reject-all-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #4b92de;
+    color: white;
+    border: none;
+}
